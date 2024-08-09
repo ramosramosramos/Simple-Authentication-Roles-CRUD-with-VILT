@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('type');
             $table->decimal('price',10,2);
             $table->string('description');
-            $table->string('image');
+            $table->string('image')->default('null');
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->softDeletes();
             $table->timestamps();

@@ -12,26 +12,34 @@ class ProductController
 
     public function index()
     {
-        $products = Product::withoutTrashed()
-        ->where('user_id', request()->user()->id)
-        ->get()
-        ->map(fn($product)=>[
-            'name'=>$product->name,
-            'type'=>$product->type,
-            'price'=>$product->price,
-            'description'=>$product->description,
-            'image'=>$product->image? Storage::url($product->image):'null',
-        ])->paginate(10);
+        // Retrieve the paginated results
+        $products = Product::query()
+        ->withoutTrashed()
+            ->where('user_id', 1)
+            ->paginate(10);
 
-        return inertia('User/Product',['products'=>$products]);
+        // Map the items manually
+        $products->through(function ($product) {
+            return [
+                'id' => $product->id,
+                'name' => $product->name,
+                'type' => $product->type,
+                'price' => $product->price,
+                'description' => $product->description,
+                'image' => $product->image ? Storage::url($product->image) : 'null',
+            ];
+        });
+
+        return inertia('User/Product', ['products' => $products]);
     }
+
 
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        //
+        return inertia('User/ProductForm/Create');
     }
 
     /**
@@ -39,7 +47,10 @@ class ProductController
      */
     public function store(StoreProductRequest $request)
     {
-        //
+       Product::create([
+        'user_id'=>request()->user()->id
+       ]);
+
     }
 
     /**

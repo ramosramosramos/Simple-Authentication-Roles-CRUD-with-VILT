@@ -17,8 +17,9 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=>fake()->words(),
-            'type'=>fake()->creditCardType(),
+            'user_id'=>1,
+            'name'=>fake()->word(),
+            'type'=>fake()->word(),
             'price'=>fake()->randomFloat(1,2,100),
             'description'=>fake()->paragraph(),
             'image'=>'null',
