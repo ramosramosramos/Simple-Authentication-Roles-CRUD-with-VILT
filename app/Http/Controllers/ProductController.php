@@ -5,13 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController
 {
 
     public function index()
     {
+        $products = Product::withoutTrashed()
+        ->where('user_id', request()->user()->id)
+        ->get()
+        ->map(fn($product)=>[
+            'name'=>$product->name,
+            'type'=>$product->type,
+            'price'=>$product->price,
+            'description'=>$product->description,
+            'image'=>$product->image? Storage::url($product->image):'null',
+        ])->paginate(10);
 
+        return inertia('User/Product',['products'=>$products]);
     }
 
     /**
