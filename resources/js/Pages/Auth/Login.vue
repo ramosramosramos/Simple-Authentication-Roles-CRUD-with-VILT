@@ -56,10 +56,8 @@
     <div class="flex flex-col justify-start items-center mb-5 gap-3">
       <h1 class="text-xl font-bold text-neutral-700">Login with :</h1>
       <div class="flex">
-        <AccountLinkVue icon="/storage/icon/facebook.png" />
-        <AccountLinkVue icon="/storage/icon/google.png" />
-        <AccountLinkVue icon="/storage/icon/tiktok.png" />
-        <AccountLinkVue icon="/storage/icon/youtube.png" />
+        <AccountLinkVue :route="route('auth.github','github')" icon="/storage/icon/github.png" />
+
       </div>
     </div>
   </section>

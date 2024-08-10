@@ -18,3 +18,5 @@ Route::post('/register', [AuthController::class, 'register'])->name('auth.regist
 Route::post('/login', [AuthController::class, 'login'])->name('auth.login');
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('auth.logout');
+Route::get('auth/{provider}/redirect', [AuthController::class, 'redirect'])->name('auth.github');
+Route::get('auth/{provider}/callback', [AuthController::class, 'callback'])->name('auth.callback');

@@ -8,6 +8,9 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
+
+
 
 class AuthController
 {
@@ -35,6 +38,30 @@ class AuthController
         Auth::logout();
         return redirect()->route('login');
     }
+    public function redirect()
+    {
+        return Socialite::driver('github')->redirect();
+    }
 
+    public function callback($provider)
+    {
+        $user = Socialite::driver($provider)->user();
+
+
+
+    $user = User::updateOrCreate([
+        'provider_id' => $user->id,
+        'provider' => $provider,
+    ], [
+        'name' => $user->name ?? $user->nickname,
+        'email' => $user->email,
+        'password' => Hash::make('password'),
+
+    ]);
+
+    Auth::login($user);
+
+        return redirect()->intended('/');
+    }
 
 }
