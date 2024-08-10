@@ -38,9 +38,9 @@ class AuthController
         Auth::logout();
         return redirect()->route('login');
     }
-    public function redirect()
+    public function redirect($provider)
     {
-        return Socialite::driver('github')->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
     public function callback($provider)
