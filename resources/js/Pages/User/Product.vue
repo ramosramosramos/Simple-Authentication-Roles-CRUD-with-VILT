@@ -1,7 +1,9 @@
 <template>
-<div v-for="product in products.data" :key="product.id">
-<h1>{{ product.name }}</h1>
-</div>
+<section class="min-h-[100vh]">
+    <div v-for="product in products.data" :key="product.id">
+        <h1>{{ product.name }}</h1>
+        </div>
+</section>
 </template>
 <script setup>
 import DefaultLayout from '@/Layouts/DefaultLayout.vue'
