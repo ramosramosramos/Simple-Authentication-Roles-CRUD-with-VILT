@@ -1,5 +1,5 @@
 <template>
-<section class="min-h-[100vh]">
+<section class="min-h-[100vh] bg-[#faf9f9]">
     <div v-for="product in products.data" :key="product.id">
         <h1>{{ product.name }}</h1>
         </div>
