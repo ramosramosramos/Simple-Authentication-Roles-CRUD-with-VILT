@@ -3,6 +3,9 @@
 <Navigation/>
 </header>
 <main @click="stateNav.hide()">
+    <div class="h-[100px] ">
+
+    </div>
     <slot/>
 
 </main>

@@ -14,20 +14,20 @@ class ProductController
     {
         // Retrieve the paginated results
         $products = Product::query()
-        ->withoutTrashed()
-            ->where('user_id',request()->user()->id)
-            ->paginate(24,[
-                'id' ,
+            ->withoutTrashed()
+            ->where('user_id', request()->user()->id)
+            ->paginate(24, [
+                'id',
                 'name',
-                'type' ,
-                'price' ,
+                'type',
+                'price',
                 'description',
                 'image'
             ]);
-            $products->getCollection()->transform(function ($product) {
-             $product->image = Storage::url($product->image)??null;
-                return $product;
-            });
+        $products->getCollection()->transform(function ($product) {
+            $product->image = Storage::url($product->image) ?? null;
+            return $product;
+        });
 
 
 
@@ -46,11 +46,11 @@ class ProductController
 
     public function store(StoreProductRequest $request)
     {
-       Product::create([
-        'user_id'=>request()->user()->id
+        dd($request->all());
+        // Product::create([
+        //     'user_id' => request()->user()->id
 
-       ]);
-
+        // ]);
     }
 
     /**
@@ -66,7 +66,8 @@ class ProductController
      */
     public function edit(Product $product)
     {
-        //
+
+        return inertia('User/ProductForm/Edit');
     }
 
     /**
@@ -74,7 +75,7 @@ class ProductController
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-        //
+
     }
 
     /**

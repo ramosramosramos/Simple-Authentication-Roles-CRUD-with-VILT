@@ -15,8 +15,14 @@
 </template>
 <script setup>
 defineProps({
-  label: String,
-  placeholder: String,
+  label:{
+    type:String,
+    default:'label',
+  } ,
+  placeholder: {
+    type:String,
+    default:"placeholder"
+  },
   type: String,
   error: String,
 });

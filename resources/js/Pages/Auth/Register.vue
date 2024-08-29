@@ -54,7 +54,7 @@
   </section>
 </template>
 <script setup>
-import TextField from "@/Components/TextField.vue";
+import TextField from "@/Components/inputs/TextField.vue";
 import { useForm } from "@inertiajs/vue3";
 import AccountLinkVue from "@/Components/AccountLink.vue";
 
