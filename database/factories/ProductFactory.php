@@ -22,7 +22,7 @@ class ProductFactory extends Factory
             'type'=>fake()->word(),
             'price'=>fake()->randomFloat(1,2,100),
             'description'=>fake()->paragraph(),
-            'image'=>'null',
+            'image'=>'products/apple.jpg',
         ];
     }
 }

@@ -15,20 +15,21 @@ class ProductController
         // Retrieve the paginated results
         $products = Product::query()
         ->withoutTrashed()
-            ->where('user_id', 1)
-            ->paginate(24);
+            ->where('user_id',request()->user()->id)
+            ->paginate(24,[
+                'id' ,
+                'name',
+                'type' ,
+                'price' ,
+                'description',
+                'image'
+            ]);
+            $products->getCollection()->transform(function ($product) {
+             $product->image = Storage::url($product->image)??null;
+                return $product;
+            });
 
-        // Map the items manually
-        $products->through(function ($product) {
-            return [
-                'id' => $product->id,
-                'name' => $product->name,
-                'type' => $product->type,
-                'price' => $product->price,
-                'description' => $product->description,
-                'image' => $product->image ? Storage::url($product->image) : 'null',
-            ];
-        });
+
 
         return inertia('User/Product', ['products' => $products]);
     }
@@ -81,6 +82,7 @@ class ProductController
      */
     public function destroy(Product $product)
     {
-        //
+        $product->deleteOrFail();
+        return redirect()->back();
     }
 }
