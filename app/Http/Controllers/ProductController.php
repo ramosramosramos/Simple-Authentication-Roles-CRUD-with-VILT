@@ -16,7 +16,7 @@ class ProductController
         $products = Product::query()
         ->withoutTrashed()
             ->where('user_id', 1)
-            ->paginate(10);
+            ->paginate(24);
 
         // Map the items manually
         $products->through(function ($product) {
@@ -42,13 +42,12 @@ class ProductController
         return inertia('User/ProductForm/Create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(StoreProductRequest $request)
     {
        Product::create([
         'user_id'=>request()->user()->id
+
        ]);
 
     }
