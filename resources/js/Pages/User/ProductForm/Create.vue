@@ -87,6 +87,12 @@ const handleImage = (e) => {
 };
 
 const handleCreate = ()=>{
-form.post(route('products.store'));
+form.post(route('products.store'),{
+    onSuccess:()=>{
+        form.reset()
+        URL.revokeObjectURL(imagePreview.value);
+        imagePreview.value=null;
+    },
+});
 }
 </script>

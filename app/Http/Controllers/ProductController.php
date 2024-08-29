@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController
@@ -13,7 +14,7 @@ class ProductController
     public function index()
     {
         // Retrieve the paginated results
-        $products = Product::query()
+        $products = Product::query()->latest()
             ->withoutTrashed()
             ->where('user_id', request()->user()->id)
             ->paginate(24, [
@@ -46,11 +47,24 @@ class ProductController
 
     public function store(StoreProductRequest $request)
     {
-        dd($request->all());
-        // Product::create([
-        //     'user_id' => request()->user()->id
+        $image_path = null;
+        if ($request->hasFile('image')) {
+            $image_path = $request->file('image')->store('public/products');
+        }
+        Product::create([
+            'name'=>$request->name,
+            'price'=>$request->price,
+            'type'=>$request->type,
+            'description'=>$request->description,
+            'image'=>$image_path,
+            'user_id'=>request()->user()->id
+        ]);
+        $date = Carbon::parse($request->created_at)->format('D,M,Y');
 
-        // ]);
+
+        return redirect()->back()
+        ->with('created',
+         "The product ".$request->name." is successfully added to the list. ".$date);
     }
 
     /**
@@ -73,10 +87,7 @@ class ProductController
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product)
-    {
-
-    }
+    public function update(UpdateProductRequest $request, Product $product) {}
 
     /**
      * Remove the specified resource from storage.
@@ -84,6 +95,6 @@ class ProductController
     public function destroy(Product $product)
     {
         $product->deleteOrFail();
-        return redirect()->back()->with('deleted',"Successfully move to trash.");
+        return redirect()->back()->with('deleted', "Successfully move to trash.");
     }
 }
