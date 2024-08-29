@@ -4,7 +4,7 @@
 </header>
 <main @click="stateNav.hide()">
     <div class=" flex items-center justify-center h-[150px] ">
-<FlashMessage/>
+<FlashMessage :flash="$page.props.flash"/>
     </div>
     <slot/>
 
@@ -16,7 +16,5 @@ import { useNav } from '@/TypeScript/NavigationState';
 import FlashMessage from '@/Components/FlashMessage.vue';
 
 const stateNav= useNav()
-defineProps({
 
-})
 </script>
