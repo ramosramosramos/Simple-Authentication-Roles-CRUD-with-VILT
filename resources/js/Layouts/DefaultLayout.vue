@@ -3,8 +3,8 @@
 <Navigation/>
 </header>
 <main @click="stateNav.hide()">
-    <div class="h-[100px] ">
-
+    <div class=" flex items-center justify-center h-[150px] ">
+<FlashMessage/>
     </div>
     <slot/>
 
@@ -13,6 +13,10 @@
 <script setup>
 import Navigation from '@/Components/Navigation.vue'
 import { useNav } from '@/TypeScript/NavigationState';
+import FlashMessage from '@/Components/FlashMessage.vue';
 
 const stateNav= useNav()
+defineProps({
+
+})
 </script>

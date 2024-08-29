@@ -84,6 +84,6 @@ class ProductController
     public function destroy(Product $product)
     {
         $product->deleteOrFail();
-        return redirect()->back();
+        return redirect()->back()->with('deleted',"Successfully move to trash.");
     }
 }
