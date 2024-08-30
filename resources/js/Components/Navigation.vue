@@ -1,6 +1,6 @@
 <template>
     <nav class="fixed z-10 w-[100%] h-[60px] flex items-center bg-[#faf6e9] shadow-lg">
-        <button @click="stateNav.change()" class="text-neutral-900 ml-2">Menu</button>
+        <button @click="stateNav.change()" class=" outline-none text-neutral-900 ml-2">Menu</button>
     </nav>
     <aside :class="{'left-[-999px]': !stateNav.isChange.value, 'left-0': stateNav.isChange.value}"
         class="absolute z-50 w-[280px] h-[100%] bg-[#fffdf6] shadow-xl transition-all ease-in-out duration-700"

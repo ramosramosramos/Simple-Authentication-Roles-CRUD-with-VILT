@@ -1,7 +1,15 @@
 <template>
   <section class="min-h-[100vh]">
+
+    <div class="h-[50px] w-[97%] m-auto flex  gap-5 justify-start  ">
+        <Link :href="route('products.index')" as="button" type="button"  class="bg-blue-600 hover:bg-blue-700 text-gray-200 ml-10 px-2
+        h-[40px] rounded-sm outline-none transition-all ease-in-out duration-300">  Go back to products</Link>
+<PageName name="Create Product"/>
+ </div>
     <div class="grid grid-cols-2 gap-[1rem] w-[90%] m-auto">
-      <form @submit.prevent="handleCreate">
+
+
+        <form @submit.prevent="handleCreate">
         <ProductField
           v-model="form.name"
           label="Product name"
@@ -58,6 +66,7 @@
 <script setup>
 import DefaultLayout from "@/Layouts/DefaultLayout.vue";
 import ProductField from "@/Components/inputs/ProductField.vue";
+import PageName from "@/Components/PageName.vue";
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 
