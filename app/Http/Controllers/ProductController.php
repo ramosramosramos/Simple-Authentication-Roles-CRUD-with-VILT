@@ -81,7 +81,15 @@ class ProductController
     public function edit(Product $product)
     {
 
-        return inertia('User/ProductForm/Edit');
+        $item =[
+            'name'=>$product->name,
+            'price'=>$product->price,
+            'type'=>$product->type,
+            'description'=>$product->description,
+            'image'=>$product->image?Storage::url($product->image):null
+        ];
+
+        return inertia('User/ProductForm/Edit',['product'=>$item]);
     }
 
     /**

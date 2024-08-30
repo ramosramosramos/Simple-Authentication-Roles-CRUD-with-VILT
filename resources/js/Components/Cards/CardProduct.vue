@@ -23,11 +23,16 @@
         >
           Remove
         </Link>
-        <button
+        <Link
+          :href="route('products.edit', product.id)"
+          method="get"
+          as="button"
+          type="button"
           class="bg-blue-600 hover:bg-blue-700 transition-all outline-none ease-in-out duration-500 text-gray-200 px-2 rounded-sm m-1"
         >
-          Edit
-        </button>
+        Edit
+        </Link>
+
       </div>
     </details>
   </div>
