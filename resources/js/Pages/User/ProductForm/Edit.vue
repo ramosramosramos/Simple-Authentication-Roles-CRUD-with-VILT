@@ -9,7 +9,7 @@
       <div class="grid grid-cols-2 gap-[1rem] w-[90%] m-auto">
 
 
-          <form @submit.prevent="handleCreate">
+          <form @submit.prevent="handleEdit">
           <ProductField
             v-model="form.name"
             label="Product name"
@@ -85,7 +85,7 @@
     type: props.product.price,
     price: props.product.price,
     description: props.product.description,
-    image: props.product.image,
+    image: null,
   });
   const handleImage = (e) => {
     const file = e.target.files[0];
@@ -97,8 +97,8 @@
 
   };
 
-  const handleCreate = ()=>{
-  form.post(route('products.store'),{
+  const handleEdit = ()=>{
+  form.post(route('products.update',props.product.id),{
       onSuccess:()=>{
           form.reset()
           URL.revokeObjectURL(imagePreview.value);

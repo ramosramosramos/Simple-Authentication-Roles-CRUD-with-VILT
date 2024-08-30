@@ -52,19 +52,21 @@ class ProductController
             $image_path = $request->file('image')->store('public/products');
         }
         Product::create([
-            'name'=>$request->name,
-            'price'=>$request->price,
-            'type'=>$request->type,
-            'description'=>$request->description,
-            'image'=>$image_path,
-            'user_id'=>request()->user()->id
+            'name' => $request->name,
+            'price' => $request->price,
+            'type' => $request->type,
+            'description' => $request->description,
+            'image' => $image_path,
+            'user_id' => request()->user()->id
         ]);
         $date = Carbon::parse($request->created_at)->format('D,M,Y');
 
 
         return redirect()->back()
-        ->with('created',
-         "The product ".$request->name." is successfully added to the list. ".$date);
+            ->with(
+                'created',
+                "The product " . $request->name . " is successfully added to the list. " . $date
+            );
     }
 
     /**
@@ -81,21 +83,43 @@ class ProductController
     public function edit(Product $product)
     {
 
-        $item =[
-            'name'=>$product->name,
-            'price'=>$product->price,
-            'type'=>$product->type,
-            'description'=>$product->description,
-            'image'=>$product->image?Storage::url($product->image):null
+        $item = [
+            'id' => $product->id,
+            'name' => $product->name,
+            'price' => $product->price,
+            'type' => $product->type,
+            'description' => $product->description,
+            'image' => $product->image ? Storage::url($product->image) : null
         ];
 
-        return inertia('User/ProductForm/Edit',['product'=>$item]);
+        return inertia('User/ProductForm/Edit', ['product' => $item]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, Product $product) {}
+    public function update(UpdateProductRequest $request, Product $product)
+    {
+
+
+        $new_image_path = $product->image;
+        if (!$request->image == null && Storage::exists($product->image)) {
+            Storage::delete($product->image);
+            $new_image_path = $request->file('image')->store('public/products');
+
+        }
+       $product->update([
+            'user_id'=>request()->user()->id,
+            'name'=>$product->name,
+            'price'=>$product->price,
+            'type'=>$product->type,
+            'description'=>$product->description,
+            'image'=>$new_image_path,
+        ]);
+
+        return redirect()->route('products.index')->with('updated',"Product is successfully updated.");
+
+    }
 
     /**
      * Remove the specified resource from storage.

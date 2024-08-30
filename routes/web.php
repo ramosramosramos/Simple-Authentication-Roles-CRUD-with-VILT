@@ -7,7 +7,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth'])->group(function () {
     Route::inertia('/', 'User/Dashboard')->name('dashboard');
-    Route::resource('/products', ProductController::class);
+    Route::resource('/products', ProductController::class)->except('update');
+    Route::post('/products/{product}', [ProductController::class,'update'])->name('products.update');
 });
 
 // -----------------------------Authentication------------------------------------
