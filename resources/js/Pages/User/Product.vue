@@ -3,7 +3,7 @@
 
 
     <div class="h-[50px]  ">
-        <Link :href="route('products.create')" as="button" type="button"  class="bg-blue-600 hover:bg-blue-700 text-gray-200 ml-10 px-2
+        <Link  v-if="can.canCreateProduct" :href="route('products.create')" as="button" type="button"  class="bg-blue-600 hover:bg-blue-700 text-gray-200 ml-10 px-2
         rounded-sm outline-none transition-all ease-in-out duration-300">Add Product</Link>
     </div>
 
@@ -11,7 +11,7 @@
 
     </div>
     <div class=" flex flex-wrap justify-center w-[90%] gap-2 m-auto ">
-      <CardProduct :products="products" />
+      <CardProduct :products="products" :can="can" />
     </div>
   </section>
 </template>
@@ -23,5 +23,6 @@ defineOptions({
 });
 defineProps({
   products: Object,
+  can:Object
 });
 </script>

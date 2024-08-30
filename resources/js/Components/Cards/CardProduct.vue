@@ -14,7 +14,7 @@
 
       <p>{{ product.description }}</p>
       <div class="flex justify-center">
-        <Link
+        <Link v-if="can.canDeleteProduct"
           :href="route('products.destroy', product.id)"
           method="delete"
           as="button"
@@ -23,7 +23,7 @@
         >
           Remove
         </Link>
-        <Link
+        <Link v-if="can.canUpdateProduct"
           :href="route('products.edit', product.id)"
           method="get"
           as="button"
@@ -40,5 +40,6 @@
 <script setup>
 defineProps({
   products: Object,
+  can:Object,
 });
 </script>

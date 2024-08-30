@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Policies\ProductPolicy;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -39,6 +40,12 @@ class HandleInertiaRequests extends Middleware
                 'created'=>session('created'),
                 'updated'=>session('updated'),
             ],
+            'can'=>[
+                'canCreateProduct'=> request()->user()->role=="seller" || request()->user()->role=="admin" ??false,
+                'canUpdateProduct'=> request()->user()->role=="seller" || request()->user()->role=="admin" ??false,
+                'canDeleteProduct'=> request()->user()->role=="seller" || request()->user()->role=="admin" ??false,
+
+            ]
         ];
     }
 }
